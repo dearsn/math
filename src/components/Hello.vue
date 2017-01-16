@@ -1,32 +1,36 @@
 <template>
   <div class="hello">
-    <h1>一年级上</h1>
-    <div v-if="started">
-      <h2>对{{ right }}道，错{{ wrong }}道</h2>
-      <div v-if="ended">
-        <button v-on:click="begin">再来一次</button>
-      </div>
-      <div v-else>
-        <count-down v-on:end_callback="end" :startTime="startTime" :endTime="endTime" :tipTextEnd="'距离结束还有'" :endText="'结束'"></count-down>
-        <div>
-        <p>{{ numa }} {{ action }} {{ numb }} =  </p>
-        <input v-model="answer" v-focus="true">
-        <br>
-        <button v-on:click="nextQuestion">下一题</button>
+    <mt-header title="一年级上"></mt-header>
+    <div class="cont">
+      <div v-if="started">
+        
+        <div v-if="ended">
+          <mt-button size="large" type="danger" v-on:click="begin">再来一次</mt-button>
+        </div>
+        <div v-else>
+          <div class="ques">
+            {{ numa }} {{ action }} {{ numb }} =  <input v-model="answer" v-focus="focused" @focus="focused = true"style="width:50px;">
+          </div>
+          <mt-button size="large" type="danger" v-on:click="nextQuestion">下一题</mt-button>
+          <div class="info">
+            <div class="tt">对<span class="right">{{ right }}</span>道，错<span class="wrong">{{ wrong }}</span>道</div>
+            <count-down v-on:end_callback="end" :startTime="startTime" :endTime="endTime" :tipTextEnd="'距离结束还有'" :endText="'结束'" class="time"></count-down>
+          </div>
         </div>
       </div>
-    </div>
-    <div v-else>
-      总共5分钟，看看你能做多少题！
-      <br>
-      <button v-on:click="begin">开始</button>
+      <div v-else>
+        <h2>总共5分钟，看看你能做多少题！</h2>
+        <mt-button size="large" type="danger" v-on:click="begin">开始</mt-button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import CountDown from 'vue2-countdown'
+import { focus } from 'vue-focus'
 export default {
+  directives: { focus: focus },
   name: 'hello',
   components: {
     CountDown
@@ -79,6 +83,7 @@ export default {
           this.numb = Math.min(a, b)
         }
       }
+      this.focused = true
     },
     nextQuestion: function () {
       if (this.action === '+') {
@@ -104,21 +109,15 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}
+h2{margin:0 0 20px;font-size:14px;}
+.cont{padding:20px;}
+.right{color:green;}
+.wrong{color:red;}
+.ques{padding-bottom:20px;font-size:22px;}
+input{font-size:22px;}
+.mint-button {opacity: 0.6;}
+.info{display: flex;line-height: 30px;}
+.info div{flex: 1;}
+.info .time{text-align: right}
+.info .tt{text-align: left}
 </style>

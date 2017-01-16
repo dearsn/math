@@ -3,12 +3,11 @@
 import Vue from 'vue'
 import App from './App'
 import MintUI from 'mint-ui'
-import { mixin as focusMixin } from 'vue-focus'
+import 'mint-ui/lib/style.css'
 
 /* eslint-disable no-new */
 Vue.use(MintUI)
 new Vue({
-  mixins: [ focusMixin ],
   el: '#app',
   template: '<App/>',
   components: { App }
