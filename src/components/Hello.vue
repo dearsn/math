@@ -5,6 +5,7 @@
       <div v-if="started">
         
         <div v-if="ended">
+          <div class="tt" style="padding-bottom:10px">对<span class="right">{{ right }}</span>道，错<span class="wrong">{{ wrong }}</span>道</div>
           <mt-button size="large" type="danger" v-on:click="begin">再来一次</mt-button>
         </div>
         <div v-else>
